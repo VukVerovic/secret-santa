@@ -1,0 +1,77 @@
+name: kanban
+
+services:
+  baza:
+    build:
+      context: ./database
+      dockerfile: Dockerfile
+    image: baza:local
+    container_name: baza-kontejner
+    user: "0:0"
+    command:
+      [
+        "-jar",
+        "DynamoDBLocal.jar",
+        "-sharedDb",
+        "-dbPath",
+        "/home/dynamodblocal/data",
+      ]
+    ports:
+      - "8000:8000"
+    volumes:
+      - volume_data:/home/dynamodblocal/data
+    restart: unless-stopped
+    networks:
+      - kanban-mreza
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    image: backend:local
+    container_name: backend-container
+    depends_on:
+      - baza
+    env_file:
+      - ./server/.env
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./server/src:/app/src
+    restart: unless-stopped
+    networks:
+      - kanban-mreza
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8080"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+
+  frontend:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    image: klijent:local
+    container_name: klijent-kontejner
+    depends_on:
+      - server
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./client/src:/app/src
+    restart: unless-stopped
+    environment:
+      - VITE_SERVER_URL=http://localhost:3000
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:5173/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  volume_data:
+networks:
+  kanban-mreza:
+    driver: bridge

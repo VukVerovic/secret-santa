@@ -1,0 +1,124 @@
+
+/* ============ Base Dark Mode ============ */
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: #1e1e2f; /* tamna pozadina */
+  color: #f5f5f5;
+}
+.wrap {
+  max-width: 1200px;
+  margin: 24px auto;
+  padding: 0 16px;
+}
+.h1 {
+  margin: 0 0 16px;
+  font-size: 26px;
+  font-weight: 700;
+  color: #ffffff;
+}
+.sub { color: #a0a0a0; margin-bottom: 12px; }
+
+.card {
+  background: #2b2b3c;
+  border-radius: 6px;
+  padding: 12px;
+  margin-bottom: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.6);
+  color: #f5f5f5;
+}
+
+.row { display: flex; gap: 8px; align-items: center; }
+
+.inp, .select, textarea, .btn {
+  border: 1px solid #444;
+  border-radius: 4px;
+  font-size: 14px;
+  background: #3a3a4d;
+  color: #f5f5f5;
+}
+.inp, .select { height: 34px; padding: 6px 8px; }
+.select { appearance: none; -webkit-appearance: none; }
+
+textarea {
+  width: 100%;
+  min-height: 80px;
+  padding: 8px;
+  resize: vertical;
+}
+
+.btn {
+  height: 34px;
+  padding: 0 12px;
+  background: #005a9c;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  border-radius: 4px;
+}
+.btn:hover { background: #0074cc; }
+.btn:disabled { background: #555; cursor: not-allowed; }
+
+.grid { display: grid; gap: 16px; }
+
+/* ============ Board columns ============ */
+.columns {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.board-col {
+  border-radius: 6px;
+  padding: 10px;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+/* TO DO - tamno crveno */
+.board-col.todo {
+  background: #3b1e1e;
+  border: 1px solid #ff4d4d;
+}
+.board-col.todo .col-title { color: #ff6b6b; }
+
+/* IN PROGRESS - tamno žuto/narandžasto */
+.board-col.doing {
+  background: #3b341e;
+  border: 1px solid #ffb84d;
+}
+.board-col.doing .col-title { color: #ffcc66; }
+
+/* DONE - tamno zeleno */
+.board-col.done {
+  background: #1e3b2a;
+  border: 1px solid #33cc99;
+}
+.board-col.done .col-title { color: #66ffcc; }
+
+/* kartice unutar kolona */
+.board-col .card {
+  background: #2b2b3c;
+  border-radius: 6px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.7);
+  padding: 10px;
+  margin-bottom: 8px;
+}
+
+/* sitnice */
+.col-title {
+  font-weight: 600;
+  font-size: 14px;
+  margin: 0 0 8px;
+}
+.muted { color: #aaa; font-size: 12px; }
+
+/* scrollbars */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-thumb {
+  background-color: #555;
+  border-radius: 4px;
+}
