@@ -12,12 +12,10 @@ class UserController {
 
   create = async (req, res) => {
     try {
-      console.log("Ovde dosao na server");
       const { email, name } = req.body;
       const id = Date.now().toString();
       const user = new User({ id, email, name });
       const newUser = await user.save();
-      console.log("Created user:", newUser);
       res.status(201).json(user);
     } catch {
       res.status(500).json({ error: "Error creating user" });

@@ -12,15 +12,13 @@ class CardController {
 
   create = async (req, res) => {
     try {
-      console.log("Ovde dosao u create card");
-      console.log("req.body:", req.body);
       const { title, description, assigneeId } = req.body;
       const id = Date.now().toString();
       const card = new Card({ id, title, description, assigneeId });
       await card.save();
       res.status(201).json(card);
     } catch (e) {
-      console.log("Greska", e);
+      console.log("Error creating card:", e);
       res.status(500).json({ error: "Error creating card" });
     }
   };
@@ -50,7 +48,6 @@ class CardController {
 
   assign = async (req, res) => {
     try {
-      console.log("Ovde dosao pomeranje");
       const { id, assigneeId } = req.body;
       const card = await Card.get(id);
       if (!card) return res.status(404).json({ error: "Card not found" });

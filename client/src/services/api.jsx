@@ -6,8 +6,6 @@ export async function apiGet(path) {
 }
 
 export async function apiPost(path, body) {
-  console.log("Ovde BASE", BASE);
-  console.log("ovde dosao", { path, body });
   const res = await fetch(`${BASE}${path}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },

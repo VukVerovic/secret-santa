@@ -2,7 +2,6 @@ import dynamoose from "dynamoose";
 
 if (process.env.LOCAL) {
   const dynamoEndpoint = process.env.DYNAMO_ENDPOINT;
-  console.log("DynamoDB Endpoint:", dynamoEndpoint);
 
   const ddb = new dynamoose.aws.ddb.DynamoDB({
     endpoint: dynamoEndpoint ?? undefined,
