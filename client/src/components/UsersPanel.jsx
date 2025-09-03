@@ -20,7 +20,13 @@ export default function UsersPanel({ users, onAddUser, onDeleteUser }) {
     <div className="card">
       <h3 style={{ margin: "0 0 8px" }}>Users</h3>
       <form onSubmit={submit} className="row" style={{ marginBottom: 8 }}>
-        <input className="inp" placeholder="email…" ref={emailRef} />
+        <input
+          className="inp"
+          placeholder="email…"
+          ref={emailRef}
+          required
+          type="email"
+        />
         <input className="inp" placeholder="name (optional)…" ref={nameRef} />
         <button className="btn">Add user</button>
       </form>

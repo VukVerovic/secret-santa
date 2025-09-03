@@ -26,8 +26,13 @@ export default function CreateCard({ users, onAdd }) {
 
   return (
     <form onSubmit={submit} className="grid">
-      <input className="inp" placeholder="Title…" ref={titleRef} />
-      <textarea className="inp" placeholder="Description…" ref={descRef} />
+      <input className="inp" placeholder="Title…" ref={titleRef} required />
+      <textarea
+        className="inp"
+        placeholder="Description…"
+        ref={descRef}
+        required
+      />
       <div className="row">
         <select className="select inp" ref={assigneeRef} defaultValue="">
           <option value="">Assignee (optional)</option>
