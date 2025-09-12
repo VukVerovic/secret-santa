@@ -1,12 +1,12 @@
-name: kanban
+name: secret-santa
 
 services:
-  baza:
+  santa-db:
     build:
       context: ./database
       dockerfile: Dockerfile
-    image: baza:local
-    container_name: baza-kontejner
+    image: secret-santa-db:local
+    container_name: secret-santa-db
     user: "0:0"
     command:
       [
@@ -14,24 +14,24 @@ services:
         "DynamoDBLocal.jar",
         "-sharedDb",
         "-dbPath",
-        "/home/dynamodblocal/data",
+        "/home/dynamodblocal/data"
       ]
     ports:
       - "8000:8000"
     volumes:
-      - volume_data:/home/dynamodblocal/data
+      - santa_data:/home/dynamodblocal/data
     restart: unless-stopped
     networks:
-      - kanban-mreza
+      - santa-net
 
-  server:
+  santa-backend:
     build:
       context: ./server
       dockerfile: Dockerfile
-    image: backend:local
-    container_name: backend-container
+    image: secret-santa-backend:local
+    container_name: secret-santa-backend
     depends_on:
-      - baza
+      - santa-db
     env_file:
       - ./server/.env
     ports:
@@ -40,22 +40,22 @@ services:
       - ./server/src:/app/src
     restart: unless-stopped
     networks:
-      - kanban-mreza
+      - santa-net
     healthcheck:
-      test: ["CMD", "wget", "-qO-", "http://localhost:8080"]
+      test: ["CMD", "wget", "-qO-", "http://localhost:3000/health"]
       interval: 30s
       timeout: 5s
       retries: 3
       start_period: 15s
 
-  frontend:
+  santa-frontend:
     build:
       context: ./client
       dockerfile: Dockerfile
-    image: klijent:local
-    container_name: klijent-kontejner
+    image: secret-santa-frontend:local
+    container_name: secret-santa-frontend
     depends_on:
-      - server
+      - santa-backend
     ports:
       - "5173:5173"
     volumes:
@@ -63,6 +63,8 @@ services:
     restart: unless-stopped
     environment:
       - VITE_SERVER_URL=http://localhost:3000
+    networks:
+      - santa-net
     healthcheck:
       test: ["CMD", "wget", "-qO-", "http://localhost:5173/"]
       interval: 30s
@@ -71,7 +73,8 @@ services:
       start_period: 10s
 
 volumes:
-  volume_data:
+  santa_data:
+
 networks:
-  kanban-mreza:
+  santa-net:
     driver: bridge

@@ -1,124 +1,164 @@
+/* ====== Tema: sneg + crveno-bela novogodišnja ====== */
+:root{
+  --bg: #fafafa;
+  --card: #ffffff;
+  --ink: #202124;
+  --muted: #6b7280;
 
-/* ============ Base Dark Mode ============ */
-* { box-sizing: border-box; }
-body {
-  margin: 0;
+  --red-600:#c71f37;  /* glavna crvena */
+  --red-700:#a50e2d;
+  --red-300:#ffb3c0;
+  --green-600:#168f62;
+
+  --ring:#ffdede;     /* suptilna crvena senka */
+}
+
+*{ box-sizing: border-box; }
+body{
+  margin:0;
   font-family: "Segoe UI", Arial, sans-serif;
-  background: #1e1e2f; /* tamna pozadina */
-  color: #f5f5f5;
+  background: var(--bg);
+  color: var(--ink);
+  /* suptilni sneg u pozadini (fallback ako .snow nije ubačen) */
+  background-image: radial-gradient(#ffffff66 1px, transparent 1px);
+  background-size: 50px 50px;
 }
-.wrap {
-  max-width: 1200px;
-  margin: 24px auto;
-  padding: 0 16px;
-}
-.h1 {
-  margin: 0 0 16px;
-  font-size: 26px;
-  font-weight: 700;
-  color: #ffffff;
-}
-.sub { color: #a0a0a0; margin-bottom: 12px; }
+.wrap{ max-width:1200px; margin:24px auto; padding:0 16px; }
 
-.card {
-  background: #2b2b3c;
-  border-radius: 6px;
-  padding: 12px;
-  margin-bottom: 12px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.6);
-  color: #f5f5f5;
+/* Naslovi i podnaslovi naglašeno crveno */
+.h1{
+  margin:0 0 10px;
+  font-size:28px;
+  font-weight:800;
+  color: var(--red-700);
+  letter-spacing: .3px;
 }
+.sub{ color:var(--muted); }
 
-.row { display: flex; gap: 8px; align-items: center; }
-
-.inp, .select, textarea, .btn {
-  border: 1px solid #444;
-  border-radius: 4px;
-  font-size: 14px;
-  background: #3a3a4d;
-  color: #f5f5f5;
+.brand{
+  display:flex; gap:12px; align-items:center;
+  border-left:4px solid var(--red-600);
+  padding-left:12px;
 }
-.inp, .select { height: 34px; padding: 6px 8px; }
-.select { appearance: none; -webkit-appearance: none; }
-
-textarea {
-  width: 100%;
-  min-height: 80px;
-  padding: 8px;
-  resize: vertical;
+.brand img{
+  width:96px; height:96px; object-fit:cover;
+  border-radius:8px;
+  box-shadow:0 0 0 3px #fff, 0 0 0 6px var(--red-300);
 }
 
-.btn {
-  height: 34px;
-  padding: 0 12px;
-  background: #005a9c;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-  font-weight: 500;
-  border-radius: 4px;
-}
-.btn:hover { background: #0074cc; }
-.btn:disabled { background: #555; cursor: not-allowed; }
-
-.grid { display: grid; gap: 16px; }
-
-/* ============ Board columns ============ */
-.columns {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  align-items: start;
+/* Kartice sa crvenim akcentom */
+.card{
+  background: var(--card);
+  border-radius:12px;
+  padding:14px;
+  margin-bottom:12px;
+  box-shadow:
+    0 6px 18px rgba(199, 31, 55, .08),
+    0 1px 0 var(--ring) inset;
+  border:1px solid #f2e4e6;
 }
 
-.board-col {
-  border-radius: 6px;
-  padding: 10px;
-  max-height: 70vh;
-  overflow-y: auto;
+/* Grid i redovi */
+.grid{ display:grid; gap:16px; grid-template-columns:1fr 1fr; }
+@media (max-width: 900px){ .grid{ grid-template-columns:1fr; } }
+.row{ display:flex; gap:8px; align-items:center; }
+
+/* Inputi sa crvenim focus-om */
+.inp, .select, textarea{
+  border:1px solid #e5e7eb;
+  border-radius:8px;
+  background:#fff;
+  color:#111827;
+  font-size:14px;
+}
+.inp, .select{ height:36px; padding:8px 10px; }
+.select{ appearance:none; -webkit-appearance:none; }
+textarea{ width:100%; min-height:88px; padding:10px; resize:vertical; }
+
+.inp:focus, .select:focus, textarea:focus{
+  outline:none;
+  border-color: var(--red-600);
+  box-shadow: 0 0 0 3px #ffd6dc;
 }
 
-/* TO DO - tamno crveno */
-.board-col.todo {
-  background: #3b1e1e;
-  border: 1px solid #ff4d4d;
+/* Dugmad – primarna crvena, sekundarna bela sa crvenom ivicom */
+.btn{
+  height:36px; padding:0 14px; border:none; cursor:pointer;
+  border-radius:999px; font-weight:600;
+  background: linear-gradient(180deg, var(--red-600), var(--red-700));
+  color:#fff;
+  box-shadow:0 6px 14px rgba(199,31,55,.25);
 }
-.board-col.todo .col-title { color: #ff6b6b; }
+.btn:hover{ filter:brightness(1.05); }
+.btn:disabled{ opacity:.6; cursor:not-allowed; }
 
-/* IN PROGRESS - tamno žuto/narandžasto */
-.board-col.doing {
-  background: #3b341e;
-  border: 1px solid #ffb84d;
+.btn-secondary{
+  height:36px; padding:0 14px; cursor:pointer;
+  border-radius:999px; font-weight:600;
+  background:#fff; color: var(--red-700);
+  border:1px solid var(--red-600);
 }
-.board-col.doing .col-title { color: #ffcc66; }
+.btn-secondary:hover{ background:#fff5f6; }
 
-/* DONE - tamno zeleno */
-.board-col.done {
-  background: #1e3b2a;
-  border: 1px solid #33cc99;
+/* Sekcije/kolone naslovi */
+.col-title{
+  font-weight:700; font-size:15px; margin:4px 0 8px;
+  color: var(--red-700);
 }
-.board-col.done .col-title { color: #66ffcc; }
-
-/* kartice unutar kolona */
-.board-col .card {
-  background: #2b2b3c;
-  border-radius: 6px;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.7);
-  padding: 10px;
-  margin-bottom: 8px;
+.muted{ color:var(--muted); font-size:12.5px; }
+.badge{
+  display:inline-block; min-width:20px; padding:2px 8px;
+  border-radius:999px; background:#fff0f2; color:var(--red-700);
+  border:1px solid #ffd6dc; font-weight:700;
 }
 
-/* sitnice */
-.col-title {
-  font-weight: 600;
-  font-size: 14px;
-  margin: 0 0 8px;
+/* Razdelnik */
+.divider{
+  height:1px; background: linear-gradient(90deg, transparent, #ffe3e7, transparent);
+  margin:12px 0;
 }
-.muted { color: #aaa; font-size: 12px; }
 
-/* scrollbars */
-::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-thumb {
-  background-color: #555;
-  border-radius: 4px;
+/* ====== PADA SNEG (izraženije) ======
+   U index.html (ili na vrhu App.jsx rendera) dodaj:
+   <div class="snow"></div>
+*/
+.snow,
+.snow::before,
+.snow::after{
+  content:"";
+  position:fixed;
+  top:-10%;
+  left:0;
+  width:100%;
+  height:120%;
+  pointer-events:none;
+  background-repeat:repeat;
+  /* tri sloja pahulja – raznih veličina i gustine */
+  background-image:
+    radial-gradient(#fff 2px, transparent 2px),
+    radial-gradient(#ffffffcc 3px, transparent 3px),
+    radial-gradient(#fff 1.2px, transparent 1.2px);
+  background-size: 24px 24px, 36px 36px, 18px 18px;
+  background-position: 0 0, 8px -12px, -6px 6px;
+  animation: snowFall 14s linear infinite;
+  opacity: .9; /* vidljivije */
+  z-index: 0;  /* ispod sadržaja kartica (koje su z-index:auto) */
 }
+.snow::before{
+  animation-duration: 20s; /* drugi tempo */
+  background-size: 28px 28px, 42px 42px, 20px 20px;
+  opacity: .7;
+}
+.snow::after{
+  animation-duration: 28s; /* treći tempo */
+  background-size: 34px 34px, 52px 52px, 24px 24px;
+  opacity: .55;
+}
+
+@keyframes snowFall{
+  0%   { transform: translateY(0);    }
+  100% { transform: translateY(100%); }
+}
+
+/* Da pahulje ne prekrivaju interfejs: kartice iznad snega */
+.card, .brand { position: relative; z-index: 1; }
